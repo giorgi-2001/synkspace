@@ -3,13 +3,13 @@ import { RootState } from "../store"
 import { logout, setCredentials } from "../../features/auth/authSlice"
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: 'http://localhost:3500/api/v1',
+    baseUrl: 'https://synkspace-api.onrender.com',
     credentials: 'include',
     prepareHeaders: (headers: Headers, { getState }) => {
         const myState = getState() as RootState
         const token = myState.auth?.access_token
 
-        if(token) {
+        if (token) {
             headers.set('Authorization', `Bearer ${token}`)
         }
         return headers
@@ -24,7 +24,7 @@ const baseQueryWithReauth: BaseQueryFn<
 
     let result = await baseQuery(args, api, extraOptions)
 
-    if(result.error && result.error.status === 403) {
+    if (result.error && result.error.status === 403) {
 
         console.log(result.error)
 
@@ -36,7 +36,7 @@ const baseQueryWithReauth: BaseQueryFn<
             body: { refresh_token }
         }, api, extraOptions)
 
-        if(refreshResult.data) {
+        if (refreshResult.data) {
             api.dispatch(setCredentials(refreshResult.data))
             result = await baseQuery(args, api, extraOptions)
         } else {
