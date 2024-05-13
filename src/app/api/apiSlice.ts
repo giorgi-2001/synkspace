@@ -3,7 +3,7 @@ import { RootState } from "../store"
 import { logout, setCredentials } from "../../features/auth/authSlice"
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: 'https://synkspace-api.onrender.com',
+    baseUrl: 'https://synkspace-api.onrender.com/api/v1',
     credentials: 'include',
     prepareHeaders: (headers: Headers, { getState }) => {
         const myState = getState() as RootState
